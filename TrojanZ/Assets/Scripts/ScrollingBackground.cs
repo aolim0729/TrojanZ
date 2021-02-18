@@ -8,7 +8,7 @@ public class ScrollingBackground : MonoBehaviour
     
     public float offset;
     
-    public Vector2 startPosition;
+    public Vector3 startPosition;
     
     public float newXposition;
 
@@ -23,6 +23,6 @@ public class ScrollingBackground : MonoBehaviour
     {
         newXposition = Mathf.Repeat(Time.time * -moveSpeed, offset);
 
-        transform.position = startPosition + Vector2.right * newXposition;
+        transform.position = startPosition + Vector3.right * newXposition;
     }
 }

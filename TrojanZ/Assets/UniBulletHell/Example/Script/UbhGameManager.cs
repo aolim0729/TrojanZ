@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
+using System.Collections;
 
 public class UbhGameManager : UbhMonoBehaviour
 {
@@ -13,14 +14,11 @@ public class UbhGameManager : UbhMonoBehaviour
     private GameObject m_playerPrefab = null;
     [SerializeField, FormerlySerializedAs("_GoTitle")]
     private GameObject m_goTitle = null;
-    [SerializeField, FormerlySerializedAs("_GoLetterBox")]
-    private GameObject m_goLetterBox = null;
     [SerializeField, FormerlySerializedAs("_Score")]
     private UbhScore m_score = null;
 
     private void Start()
     {
-        m_goLetterBox.SetActive(m_scaleToFit == false);
     }
 
     private void Update()
@@ -63,6 +61,7 @@ public class UbhGameManager : UbhMonoBehaviour
         }
 
         CreatePlayer();
+        
     }
 
     public void GameOver()

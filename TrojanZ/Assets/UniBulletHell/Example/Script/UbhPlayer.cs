@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 [RequireComponent(typeof(UbhSpaceship))]
 public class UbhPlayer : UbhMonoBehaviour
@@ -16,6 +19,9 @@ public class UbhPlayer : UbhMonoBehaviour
     [SerializeField, FormerlySerializedAs("_UseAxis")]
     private UbhUtil.AXIS m_useAxis = UbhUtil.AXIS.X_AND_Y;
 
+    [SerializeField]
+    private float invincibilityDurationSeconds;
+
     private UbhSpaceship m_spaceship;
     private UbhGameManager m_manager;
     private Transform m_backgroundTransform;
@@ -24,10 +30,26 @@ public class UbhPlayer : UbhMonoBehaviour
     private float m_lastYpos;
     private Vector2 m_tempVector2 = UbhUtil.VECTOR2_ZERO;
 
+    public int health;
+    public int numofHearts;
+
+    public Image[] hearts;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
+
+    private bool isInvincible = false;
+
+    Renderer rend;
+    Color c;
+
     private void Start()
     {
         m_spaceship = GetComponent<UbhSpaceship>();
         m_manager = FindObjectOfType<UbhGameManager>();
+        StartCoroutine(BecomeTemporarilyInvincible());
+        rend = GetComponent<Renderer>();
+        c = rend.material.color;
+
     }
 
     private void Update()
@@ -42,6 +64,32 @@ public class UbhPlayer : UbhMonoBehaviour
         else
         {
             KeyMove();
+        }
+
+        if(health > numofHearts)
+        {
+            health = numofHearts;
+        }
+        
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if(i < health)
+            {
+                hearts[i].sprite = fullHeart;
+                
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+            if(i < numofHearts)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+            {
+                hearts[i].enabled = false;
+            }
         }
     }
 
@@ -119,17 +167,54 @@ public class UbhPlayer : UbhMonoBehaviour
             transform.position = pos;
         }
     }
-
+  
     private void Damage()
     {
-        if (m_manager != null)
+        LoseHealth();
+        if (health <= 0)
         {
-            m_manager.GameOver();
+            m_spaceship.Explosion();
+            Destroy(gameObject);
+
+            if (m_manager != null)
+            {
+                m_manager.GameOver();
+            }
         }
+    }
 
-        m_spaceship.Explosion();
+    public void LoseHealth()
+    {
+        if (isInvincible) return;
 
-        Destroy(gameObject);
+        health -= 1;
+
+        if (health <=0)
+        {
+            health =0;
+            return;
+        }
+        StartCoroutine(BecomeTemporarilyInvincible());
+    }
+
+    public IEnumerator BecomeTemporarilyInvincible()
+    {
+        Debug.Log("Player turned invincible!");
+        isInvincible = true;
+
+        yield return new WaitForSeconds(invincibilityDurationSeconds);
+        
+        isInvincible = false;
+
+        Debug.Log("Player is no longer invincible!");
+    }
+
+    void MethodThatTriggersInvulnerability()
+    {
+        if (!isInvincible)
+        {
+            StartCoroutine(BecomeTemporarilyInvincible());
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D c)

@@ -19,11 +19,9 @@ public class UbhPlayer : UbhMonoBehaviour
     [SerializeField, FormerlySerializedAs("_UseAxis")]
     private UbhUtil.AXIS m_useAxis = UbhUtil.AXIS.X_AND_Y;
 
-    [SerializeField]
-    private float invincibilityDurationSeconds;
-
     private UbhSpaceship m_spaceship;
     private UbhGameManager m_manager;
+    private PlayerState m_playerstate;
     private Transform m_backgroundTransform;
     private bool m_isTouch;
     private float m_lastXpos;
@@ -37,19 +35,11 @@ public class UbhPlayer : UbhMonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
 
-    private bool isInvincible = false;
-
-    Renderer rend;
-    Color c;
-
     private void Start()
     {
         m_spaceship = GetComponent<UbhSpaceship>();
         m_manager = FindObjectOfType<UbhGameManager>();
-        StartCoroutine(BecomeTemporarilyInvincible());
-        rend = GetComponent<Renderer>();
-        c = rend.material.color;
-
+        m_playerstate = FindObjectOfType<PlayerState>();
     }
 
     private void Update()
@@ -76,7 +66,6 @@ public class UbhPlayer : UbhMonoBehaviour
             if(i < health)
             {
                 hearts[i].sprite = fullHeart;
-                
             }
             else
             {
@@ -90,6 +79,11 @@ public class UbhPlayer : UbhMonoBehaviour
             {
                 hearts[i].enabled = false;
             }
+        }
+
+        if( health <= 0)
+        {
+            GameEnded();
         }
     }
 
@@ -168,52 +162,30 @@ public class UbhPlayer : UbhMonoBehaviour
         }
     }
   
-    private void Damage()
+    private void GameEnded()
     {
-        LoseHealth();
-        if (health <= 0)
+        if (m_manager != null)
         {
-            m_spaceship.Explosion();
-            Destroy(gameObject);
-
-            if (m_manager != null)
-            {
-                m_manager.GameOver();
-            }
+            m_manager.GameOver();
         }
+        m_spaceship.Explosion();
+            Destroy(gameObject);
     }
 
     public void LoseHealth()
     {
-        if (isInvincible) return;
+        if (m_playerstate.isInvincible) return;
 
         health -= 1;
 
         if (health <=0)
         {
-            health =0;
+            health = 0;
             return;
         }
-        StartCoroutine(BecomeTemporarilyInvincible());
-    }
-
-    public IEnumerator BecomeTemporarilyInvincible()
-    {
-        Debug.Log("Player turned invincible!");
-        isInvincible = true;
-
-        yield return new WaitForSeconds(invincibilityDurationSeconds);
-        
-        isInvincible = false;
-
-        Debug.Log("Player is no longer invincible!");
-    }
-
-    void MethodThatTriggersInvulnerability()
-    {
-        if (!isInvincible)
+        else
         {
-            StartCoroutine(BecomeTemporarilyInvincible());
+            m_playerstate.MethodThatTriggersInvulnerability();
         }
     }
 
@@ -238,12 +210,12 @@ public class UbhPlayer : UbhMonoBehaviour
             if (bullet.isActive)
             {
                 UbhObjectPool.instance.ReleaseBullet(bullet);
-                Damage();
+                LoseHealth();
             }
         }
         else if (goName.Contains(NAME_ENEMY))
         {
-            Damage();
+            LoseHealth();
         }
     }
 }

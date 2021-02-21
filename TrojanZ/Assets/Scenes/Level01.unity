@@ -405,7 +405,6 @@ MonoBehaviour:
     type: 3}
   m_goTitle: {fileID: 1712234022}
   m_score: {fileID: 271489658}
-  invincibilityDurationSeconds: 3
 --- !u!4 &265047422
 Transform:
   m_ObjectHideFlags: 0

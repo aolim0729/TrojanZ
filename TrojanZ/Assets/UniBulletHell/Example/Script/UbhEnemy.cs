@@ -7,7 +7,7 @@ public class UbhEnemy : UbhMonoBehaviour
     public const string NAME_PLAYER = "Player";
     public const string NAME_PLAYER_BULLET = "PlayerBullet";
 
-    private const string ANIM_DAMAGE_TRIGGER = "Damage";
+    public const string ANIM_DAMAGE_TRIGGER = "Damage";
 
     [SerializeField, FormerlySerializedAs("_Hp")]
     private int m_hp = 1;

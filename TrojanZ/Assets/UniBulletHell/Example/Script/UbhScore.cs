@@ -8,7 +8,7 @@ public class UbhScore : UbhMonoBehaviour
     private const string HIGH_SCORE_TITLE = "HighScore : ";
 
     [SerializeField, FormerlySerializedAs("_DeleteScore")]
-    private bool m_deleteScore = false;
+    public bool m_deleteScore = false;
     [SerializeField]
     private Text m_scoreText = null;
     [SerializeField]

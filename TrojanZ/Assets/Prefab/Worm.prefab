@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 668401899530905755}
   - component: {fileID: 7873287096218901999}
   - component: {fileID: 232588487833399363}
+  - component: {fileID: 6303798990140353006}
+  - component: {fileID: 485266818367058343}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Untagged
@@ -173,3 +175,33 @@ PolygonCollider2D:
       - {x: 0.068359375, y: -0.25390625}
       - {x: 0.09765625, y: -0.21875}
       - {x: 0.09765625, y: -0.15234375}
+--- !u!114 &6303798990140353006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847348590860621303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 064fe7316350a4d429f8020661a32939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 1
+  m_explosionPrefab: {fileID: 0}
+--- !u!114 &485266818367058343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847348590860621303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57dd07d79c4904ceb9acbecad08b5137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hp: 25
+  m_point: 100
+  m_useStop: 0
+  m_stopPoint: 2

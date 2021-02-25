@@ -41,7 +41,6 @@ public class Spawner : UbhMonoBehaviour
             m_currentWave = (int)Mathf.Repeat(m_currentWave + 1f, m_waves.Length);
             count += 1;
         }
-
         LevelEnded();
 
     }

@@ -807,11 +807,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_waves:
   - {fileID: 1602066661091630960, guid: aff583a0ac55cc2418d0620ac0b04ea2, type: 3}
-  - {fileID: 9002739585540193318, guid: c879e13bde51c7348bb1c8a2717125ce, type: 3}
-  - {fileID: 3667033752471897601, guid: 60b106c1dbe0c9b49a05962194eb937d, type: 3}
-  - {fileID: 4192884366406616233, guid: 8d8f8b447f38b6043a1ca4b0b93538b1, type: 3}
-  - {fileID: 7124863572390678682, guid: adc436688de44f747934909954f2728f, type: 3}
-  - {fileID: 5168051460655434170, guid: 01dd60e0a98e8ab42bc1e640ab3cc55e, type: 3}
 --- !u!4 &339873907
 Transform:
   m_ObjectHideFlags: 0

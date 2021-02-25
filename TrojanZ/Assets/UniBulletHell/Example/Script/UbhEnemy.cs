@@ -31,7 +31,7 @@ public class UbhEnemy : UbhMonoBehaviour
     {
         if (m_useStop)
         {
-            if (transform.position.y < m_stopPoint)
+            if (transform.position.x < m_stopPoint)
             {
                 rigidbody2D.velocity = UbhUtil.VECTOR2_ZERO;
                 m_useStop = false;
@@ -60,9 +60,7 @@ public class UbhEnemy : UbhMonoBehaviour
                 if (m_hp <= 0)
                 {
                     FindObjectOfType<UbhScore>().AddPoint(m_point);
-
                     m_spaceship.Explosion();
-
                     Destroy(gameObject);
                 }
                 else

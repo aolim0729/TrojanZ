@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class UbhGameManager : UbhMonoBehaviour
 {
@@ -16,37 +17,16 @@ public class UbhGameManager : UbhMonoBehaviour
     private GameObject m_goTitle = null;
     [SerializeField, FormerlySerializedAs("_Score")]
     private UbhScore m_score = null;
+    public LevelLoader m_levelLoader = null;
+
 
     private void Start()
     {
+        GameStart();
     }
 
     private void Update()
     {
-        if (UbhUtil.IsMobilePlatform())
-        {
-            /*
-            for (int i = 0; i < Input.touchCount; i++) {
-                Touch touch = Input.GetTouch (i);
-
-                if (IsPlaying () == false && touch.phase == TouchPhase.Began) {
-                    GameStart ();
-                }
-            }
-            */
-            if (IsPlaying() == false && Input.GetMouseButtonDown(0))
-            {
-                GameStart();
-            }
-
-        }
-        else
-        {
-            if (IsPlaying() == false && Input.GetKeyDown(KeyCode.X))
-            {
-                GameStart();
-            }
-        }
     }
 
     private void GameStart()
@@ -69,12 +49,9 @@ public class UbhGameManager : UbhMonoBehaviour
         if (m_score != null)
         {
             m_score.Save();
+            Invoke("RestartLevel",1);
         }
 
-        if (m_goTitle != null)
-        {
-            m_goTitle.SetActive(true);
-        }
         else
         {
             // for UBH_ShotShowcase scene.
@@ -98,5 +75,15 @@ public class UbhGameManager : UbhMonoBehaviour
             // for UBH_ShotShowcase scene.
             return true;
         }
+    }
+
+    public void NextLevel()
+    {
+        m_levelLoader.LoadNextLevel();
+    }
+
+    private void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

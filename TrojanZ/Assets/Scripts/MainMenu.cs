@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public LevelLoader levelloader = null;
     public void PlayGame()
     {
         Invoke("StartGame",2f);
@@ -18,6 +19,6 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        levelloader.LoadNextLevel();
     }
 }

@@ -164,12 +164,13 @@ public class UbhPlayer : UbhMonoBehaviour
   
     private void GameEnded()
     {
+        m_spaceship.Explosion();
+        Destroy(gameObject);
         if (m_manager != null)
         {
             m_manager.GameOver();
         }
-        m_spaceship.Explosion();
-            Destroy(gameObject);
+
     }
 
     public void LoseHealth()
